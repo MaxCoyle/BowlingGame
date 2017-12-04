@@ -4,6 +4,16 @@ namespace BowlingGame
 {
     public class ScoringRules
     {
+        private static bool IsStrike(IReadOnlyList<int> rolls, int roll)
+        {
+            return rolls[roll] == 10;
+        }
+        
+        private static bool IsSpare(IReadOnlyList<int> rolls, int roll)
+        {
+            return rolls[roll] + rolls[roll + 1] == 10;
+        }
+
         public interface IScoringRule
         {
             void Execute(int[] rolls, ref int roll, ref int score);
@@ -13,7 +23,7 @@ namespace BowlingGame
         {
             public void Execute(int[] rolls, ref int roll, ref int score)
             {
-                if (rolls[roll] != 10) return;
+                if (!IsStrike(rolls, roll)) return;
                 score += 10 + rolls[roll + 1] + rolls[roll + 2];
                 roll++;
             }
@@ -23,7 +33,7 @@ namespace BowlingGame
         {
             public void Execute(int[] rolls, ref int roll, ref int score)
             {
-                if (rolls[roll] + rolls[roll + 1] != 10) return;
+                if (!IsSpare(rolls, roll)) return;
                 score += 10 + rolls[roll + 2];
                 roll += 2;
             }
@@ -33,7 +43,7 @@ namespace BowlingGame
         {
             public void Execute(int[] rolls, ref int roll, ref int score)
             {
-                if ((rolls[roll] == 10) || (rolls[roll] + rolls[roll + 1] == 10)) return;
+                if (IsStrike(rolls, roll) || IsSpare(rolls, roll)) return;
                 score += rolls[roll] + rolls[roll + 1];
                 roll += 2;
             }
