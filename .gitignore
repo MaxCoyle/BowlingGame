@@ -1,1 +1,7 @@
 /packages
+.vs/BowlingGameKata/v15/sqlite3/storage.ide
+BowlingGame/bin/
+BowlingGame/obj/Debug/
+BowlingGameTest/bin/
+BowlingGameTest/obj/
+BowlingGameTest/packages/
